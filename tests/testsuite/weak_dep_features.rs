@@ -1508,9 +1508,230 @@ perhaps a crate was updated and forgotten to be re-vendored?
             .build();
 
         p.cargo("check")
+            .env("CARGO_LOG", "trace")
             .with_status(101)
             .with_stderr_data(str![[r#"
+   0.000253138s TRACE cargo: start="2026-02-07T09:33:20.040679086Z"
+   0.001264717s DEBUG main:cli: cargo::util::context: load config from file path="[ROOT]/home/.cargo/config.toml" why_load=FileDiscovery includes=true
+   0.001615599s TRACE main:cli: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.004867096s TRACE main:expand_aliases: cargo::util::context: get cv ConfigKey { env: "CARGO_ALIAS_CHECK", parts: [("alias", 5), ("check", 11)] }
+   0.004984317s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005102550s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_NET", parts: [("net", 5)] }
+   0.011612526s TRACE main:init_git:init_git_transports: cargo::util::context: get cv ConfigKey { env: "CARGO_HTTP", parts: [("http", 5)] }
+   0.017672382s TRACE main:exec:workspace:read_manifest{path="[ROOT]/foo/Cargo.toml" source_id=SourceId { inner: SourceIdInner { url: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }, canonical_url: CanonicalUrl(Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }), kind: Path, precise: None, registry_key: None } }}:to_real_manifest:gather_dependencies: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.018323110s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_BUILD", parts: [("build", 5)] }
+   0.018693178s DEBUG main:exec:workspace:find_members: cargo::core::workspace: find_members - only me as a member
+   0.018740528s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_RESOLVER", parts: [("resolver", 5)] }
+   0.019056113s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.019263424s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.019304873s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.019338566s TRACE main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::context: get cv ConfigKey { env: "CARGO_ENV", parts: [("env", 5)] }
+   0.019387849s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.019402437s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.031816755s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.032043813s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: rustc info cache miss
+   0.032088788s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: running `rustc - --crate-name ___ --print=file-names --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings`
+   0.045809752s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.045891908s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET", parts: [("target", 5)] }
+   0.045921032s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::context::target: Got all targets {}
+   0.045967600s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046034426s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.046069172s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.046099640s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046128143s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.046148321s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.046176735s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.046205159s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.046232751s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046260473s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.046279228s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.046450902s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046486750s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046545551s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.046686707s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.046736812s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.046815951s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io", parts: [("source", 5), ("crates-io", 12)] }
+   0.047089908s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047154260s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047229181s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047399202s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.047477189s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.047801000s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::core::registry: load/locked   [ROOT]/foo
+   0.047864630s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.047915837s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::ops::resolve: return=Ok({})
+   0.047965421s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: locking summary of foo v0.1.0 ([ROOT]/foo)
+   0.048005657s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	bar_activator/^1.0/registry `crates-io`
+   0.048027498s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.048043368s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	feat_activator/^1.0/registry `crates-io`
+   0.048059989s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.048134169s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: initial activation: foo v0.1.0 ([ROOT]/foo)
+   0.048184564s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating foo v0.1.0 ([ROOT]/foo)
+   0.048255258s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/missing  registry `crates-io`
+   0.048275877s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: loading source registry `crates-io`
+   0.048293279s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: loading: registry `crates-io`
+   0.048314680s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to dummy-registry
+   0.048354806s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048383991s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048410591s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048501512s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to registry dummy-registry
+   0.048525307s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `dummy-registry`
+   0.048571745s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `crates-io`
+   0.048768677s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: updating the index
+   0.048906567s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: acquiring registry index lock
 [UPDATING] `dummy-registry` index
+   0.067035149s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: skipping gc as there's only 0 pack files
+   0.067546013s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: doing a fetch for [ROOTURL]/registry
+   0.067621506s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: git-fetch: backend="libgit2"
+   0.067889702s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: initiating fetch of ["+HEAD:refs/remotes/origin/HEAD"] from [ROOTURL]/registry
+   0.091392907s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index::cache: cache missing: [NOT_FOUND] cache_path="[ROOT]/home/.cargo/registry/index/-[HASH]/.cache/ba/r_/bar_activator"
+   0.091960248s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: slow path for "ba/r_/bar_activator"
+   0.092635332s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.1.0
+   0.092735811s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: caching index_version b911034e3a27c49cfd2be4dec84e24a454dcaf98
+   0.093160523s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.1.0
+   0.093192814s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.093213543s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.093287132s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.093363175s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index::cache: cache missing: [NOT_FOUND] cache_path="[ROOT]/home/.cargo/registry/index/-[HASH]/.cache/fe/at/feat_activator"
+   0.093463184s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: slow path for "fe/at/feat_activator"
+   0.093712875s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.0
+   0.093809738s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.1
+   0.093832270s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: caching index_version e76e8822724062e9bc1aa09173e2bb3a2c2cf6db
+   0.094077894s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.1
+   0.094106258s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.094128249s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.094155751s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.094171531s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.094185707s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.094415120s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator 1 candidates
+   0.094443754s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator trying 1.1.0
+   0.094489240s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.1.0
+   0.094571896s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.094648621s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index::cache: cache missing: [NOT_FOUND] cache_path="[ROOT]/home/.cargo/registry/index/-[HASH]/.cache/ba/r_/bar_wrapper"
+   0.094740184s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: slow path for "ba/r_/bar_wrapper"
+   0.094967112s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.0
+   0.095087640s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.1
+   0.095204600s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.2
+   0.095231321s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: caching index_version 09f8848a8240c252546a352afa3ffff52ebf4194
+   0.095447649s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.095473748s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.095492063s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.095515507s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.095531617s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.095546596s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.095573336s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.095589988s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.095604124s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.095778794s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator 2 candidates
+   0.095817437s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator trying 1.1.1
+   0.095885115s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.1
+   0.095954576s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.095994311s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.096012305s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.096029687s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.096049855s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.096065545s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.096079231s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.096098066s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.096117453s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.096131550s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.096197875s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper 3 candidates
+   0.096221670s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.2
+   0.096253550s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.096320997s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.096412109s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index::cache: cache missing: [NOT_FOUND] cache_path="[ROOT]/home/.cargo/registry/index/-[HASH]/.cache/3/b/bar"
+   0.096518540s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: slow path for "3/b/bar"
+   0.096755778s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar/1.0.0
+   0.096790313s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: caching index_version 16f56bc774fce8b4910ed2fd7ebd19c9ee347f0c
+   0.097065602s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar v1.0.0
+   0.097096320s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	the_feat/^1.0/registry `crates-io`
+   0.097119905s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.097250091s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.097281850s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.097329651s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.097396677s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.097445038s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.2
+   0.097478261s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.097499822s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.097582648s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.097603948s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.097624708s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.097652730s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.097702905s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.097781934s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index::cache: cache missing: [NOT_FOUND] cache_path="[ROOT]/home/.cargo/registry/index/-[HASH]/.cache/th/e_/the_feat"
+   0.097862526s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: slow path for "th/e_/the_feat"
+   0.097968326s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry the_feat/0.1.0
+   0.097993544s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: caching index_version 35023826a49b0d26fc91d503dfc5289ac3a41603
+   0.098227685s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat 0 candidates
+   0.098258454s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat -- no candidates
+   0.098282168s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: the_feat = "^1.0" adding a skip {}
+   0.098343244s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.1
+   0.098395442s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.098506001s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.098527912s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.098553350s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.098597423s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.1/", source: /"registry `crates-io`/" }: Semver})!"
+   0.098653279s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.1
+   0.098677805s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.1 is already activated
+   0.098697953s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.098764348s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.098785508s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.098806067s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.098821696s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.098899133s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[7]>bar skipping 1.0.0 
+   0.098919591s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[7]>bar -- no candidates
+   0.098935842s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar = "^1.0" adding a skip {}
+   0.098962462s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.0
+   0.098987830s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.099046962s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.0 
+   0.099066579s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper -- no candidates
+   0.099087408s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator trying 1.1.0
+   0.099110492s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.0
+   0.099164193s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper 3 candidates
+   0.099184892s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.2
+   0.099213776s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.099244675s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.2 
+   0.099268550s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.1
+   0.099295781s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.099323914s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.1 
+   0.099345535s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.0
+   0.099367016s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.099399156s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.099418002s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.099438901s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.099481031s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.0/", source: /"registry `crates-io`/" }: Semver})!"
+   0.099515095s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.0
+   0.099536786s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.0 is already activated
+   0.099555251s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.099666551s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.099692740s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.099714972s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.099731283s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.099786938s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat 0 candidates
+   0.099809180s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat -- no candidates
+   0.099826853s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: no candidates found
+   0.099844687s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.099876537s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.099913717s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of the_feat v0.1.0
+   0.100347496s  WARN main:exec:compile_ws:create_bcx: cargo::util::rustc: failed to update rustc info cache: failed to write `[ROOT]/foo/target/.rustc_info.json`
+   0.100486899s DEBUG cargo: exit_with_error; err=CliError { [ERROR] Some(failed to select a version for the requirement `the_feat = "^1.0"`
+candidate versions found which didn't match: 0.1.0
+location searched: `dummy-registry` index (which is replacing registry `crates-io`)
+required by package `bar v1.0.0`
+    ... which satisfies dependency `bar = "^1.0"` of package `bar_wrapper v1.1.0`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+perhaps a crate was updated and forgotten to be re-vendored?), exit_code: 101 }
+   0.100519661s DEBUG cargo: display_error; err=failed to select a version for the requirement `the_feat = "^1.0"`
+candidate versions found which didn't match: 0.1.0
+location searched: `dummy-registry` index (which is replacing registry `crates-io`)
+required by package `bar v1.0.0`
+    ... which satisfies dependency `bar = "^1.0"` of package `bar_wrapper v1.1.0`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+perhaps a crate was updated and forgotten to be re-vendored?
 [ERROR] failed to select a version for the requirement `the_feat = "^1.0"`
 candidate versions found which didn't match: 0.1.0
 location searched: `dummy-registry` index (which is replacing registry `crates-io`)
@@ -1527,10 +1748,231 @@ perhaps a crate was updated and forgotten to be re-vendored?
         p.change_file("Cargo.lock", "version = 5");
 
         p.cargo("check -Znext-lockfile-bump")
+            .env("CARGO_LOG", "trace")
             .with_status(101)
             .masquerade_as_nightly_cargo(&["weak_dep_check"])
             .with_stderr_data(str![[r#"
+   0.000262005s TRACE cargo: start="2026-02-07T09:33:20.175490402Z"
+   0.001417265s DEBUG main:cli: cargo::util::context: load config from file path="[ROOT]/home/.cargo/config.toml" why_load=FileDiscovery includes=true
+   0.001801590s TRACE main:cli: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005530928s TRACE main:expand_aliases: cargo::util::context: get cv ConfigKey { env: "CARGO_ALIAS_CHECK", parts: [("alias", 5), ("check", 11)] }
+   0.005778275s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_UNSTABLE", parts: [("unstable", 5)] }
+   0.005847185s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005988652s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_NET", parts: [("net", 5)] }
+   0.013185093s TRACE main:init_git:init_git_transports: cargo::util::context: get cv ConfigKey { env: "CARGO_HTTP", parts: [("http", 5)] }
+   0.015115727s TRACE main:exec:workspace:read_manifest{path="[ROOT]/foo/Cargo.toml" source_id=SourceId { inner: SourceIdInner { url: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }, canonical_url: CanonicalUrl(Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }), kind: Path, precise: None, registry_key: None } }}:to_real_manifest:gather_dependencies: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.015560747s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_BUILD", parts: [("build", 5)] }
+   0.015814836s DEBUG main:exec:workspace:find_members: cargo::core::workspace: find_members - only me as a member
+   0.015894516s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_RESOLVER", parts: [("resolver", 5)] }
+   0.016296505s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.016561886s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.016617511s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.016661815s TRACE main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::context: get cv ConfigKey { env: "CARGO_ENV", parts: [("env", 5)] }
+   0.016727158s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.016743258s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.029743923s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.029962065s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: rustc info cache miss
+   0.029979928s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: running `rustc - --crate-name ___ --print=file-names --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings`
+   0.045570882s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.045682031s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET", parts: [("target", 5)] }
+   0.045723049s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::context::target: Got all targets {}
+   0.045779786s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.045851401s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.045889132s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.045918528s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.045947122s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.045966368s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.045994772s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.046022714s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.046050717s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046081585s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.046100080s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.046270001s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046305448s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046332589s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.046404385s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.046428380s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.046471481s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io", parts: [("source", 5), ("crates-io", 12)] }
+   0.046602458s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.046627155s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.046652343s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.046729588s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046759264s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.047055914s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:load_pkg_lockfile: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.047297721s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::core::registry: load/locked   [ROOT]/foo
+   0.047360449s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.047399843s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::ops::resolve: return=Ok({})
+   0.047425943s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::ops::resolve: previous: graph: Graph {
+}
+
+features: {
+}
+   0.047498750s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed bar_activator
+   0.047534016s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed feat_activator
+   0.047569644s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks: cargo::core::registry: clear_lock
+   0.047628124s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: locking summary of foo v0.1.0 ([ROOT]/foo)
+   0.047667959s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	bar_activator/^1.0/registry `crates-io`
+   0.047687797s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.047701202s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	feat_activator/^1.0/registry `crates-io`
+   0.047715028s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.047787325s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: initial activation: foo v0.1.0 ([ROOT]/foo)
+   0.047853119s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating foo v0.1.0 ([ROOT]/foo)
+   0.047928250s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/missing  registry `crates-io`
+   0.047947136s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: loading source registry `crates-io`
+   0.047962225s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: loading: registry `crates-io`
+   0.047982924s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to dummy-registry
+   0.048033559s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048066602s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048094334s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048209371s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to registry dummy-registry
+   0.048233697s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `dummy-registry`
+   0.048278902s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `crates-io`
+   0.048400432s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: updating the index
+   0.048552368s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: acquiring registry index lock
 [UPDATING] `dummy-registry` index
+   0.049015833s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: skipping gc as there's only 2 pack files
+   0.049228384s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: doing a fetch for [ROOTURL]/registry
+   0.049254704s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: git-fetch: backend="libgit2"
+   0.049409205s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: initiating fetch of ["+HEAD:refs/remotes/origin/HEAD"] from [ROOTURL]/registry
+   0.051092863s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_activator"
+   0.051438054s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.1.0
+   0.051497877s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.1.0
+   0.051525239s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.051548553s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.051610159s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.051770942s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "fe/at/feat_activator"
+   0.051927909s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.0
+   0.051972723s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.051996308s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.052018970s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052121744s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.1
+   0.052160768s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.1
+   0.052182920s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.052202858s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052382787s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator 1 candidates
+   0.052418625s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator trying 1.1.0
+   0.052471054s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.1.0
+   0.052550854s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.052741734s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_wrapper"
+   0.053007586s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.0
+   0.053057009s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.053079211s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053098187s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053221269s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.2
+   0.053258369s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.053278738s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053296221s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053410827s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.1
+   0.053447847s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.053466783s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053484035s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053578243s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator 2 candidates
+   0.053610374s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator trying 1.1.1
+   0.053670728s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.1
+   0.053736211s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.053779292s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.053803689s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053818947s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053850296s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.053865936s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053880974s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053898928s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.053917453s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.053930798s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.054008315s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper 3 candidates
+   0.054032110s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.2
+   0.054073568s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.054146375s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.054386278s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "3/b/bar"
+   0.054600112s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar/1.0.0
+   0.054662329s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar v1.0.0
+   0.054684300s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	the_feat/^1.0/registry `crates-io`
+   0.054703086s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.054879148s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.054914856s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.054972534s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.055047867s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.055094184s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.2
+   0.055133598s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.055157133s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.055266098s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.055289192s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.055314430s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.055330770s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.055381306s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.055665172s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "th/e_/the_feat"
+   0.055760421s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat 0 candidates
+   0.055784507s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat -- no candidates
+   0.055807811s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: the_feat = "^1.0" adding a skip {}
+   0.055889064s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.1
+   0.055934009s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.056039017s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.056060718s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.056095794s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.056138214s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.1/", source: /"registry `crates-io`/" }: Semver})!"
+   0.056193819s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.1
+   0.056219468s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.1 is already activated
+   0.056239596s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.056334535s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.056356586s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.056380492s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.056396552s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.056484528s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[7]>bar skipping 1.0.0 
+   0.056505357s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[7]>bar -- no candidates
+   0.056525726s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar = "^1.0" adding a skip {}
+   0.056562735s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.0
+   0.056590849s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.056654328s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.0 
+   0.056674336s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper -- no candidates
+   0.056697069s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator trying 1.1.0
+   0.056720834s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.0
+   0.056778142s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper 3 candidates
+   0.056799112s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.2
+   0.056846922s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.056888701s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.2 
+   0.056915381s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.1
+   0.056941190s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.056968882s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper skipping 1.1.1 
+   0.056990162s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.0
+   0.057011532s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.057053291s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar 1 candidates
+   0.057072377s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[4]>bar trying 1.0.0
+   0.057094479s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.057161255s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.0/", source: /"registry `crates-io`/" }: Semver})!"
+   0.057269479s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[5]>bar_wrapper trying 1.1.0
+   0.057312140s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.0 is already activated
+   0.057342277s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.057611414s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar 1 candidates
+   0.057641922s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar trying 1.0.0
+   0.057674704s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar v1.0.0 is already activated
+   0.057701044s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.057784832s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat 0 candidates
+   0.057808326s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[7]>the_feat -- no candidates
+   0.057845226s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: no candidates found
+   0.057867538s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.057926249s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.058119924s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry the_feat/0.1.0
+   0.058164909s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of the_feat v0.1.0
+   0.058781743s  WARN main:exec:compile_ws:create_bcx: cargo::util::rustc: failed to update rustc info cache: failed to write `[ROOT]/foo/target/.rustc_info.json`
+   0.059029541s DEBUG cargo: exit_with_error; err=CliError { [ERROR] Some(failed to select a version for the requirement `the_feat = "^1.0"`
+candidate versions found which didn't match: 0.1.0
+location searched: `dummy-registry` index (which is replacing registry `crates-io`)
+required by package `bar v1.0.0`
+    ... which satisfies dependency `bar = "^1.0"` of package `bar_wrapper v1.1.0`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `feat_activator v1.1.0`
+    ... which satisfies dependency `feat_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+perhaps a crate was updated and forgotten to be re-vendored?), exit_code: 101 }
+   0.059094513s DEBUG cargo: display_error; err=failed to select a version for the requirement `the_feat = "^1.0"`
+candidate versions found which didn't match: 0.1.0
+location searched: `dummy-registry` index (which is replacing registry `crates-io`)
+required by package `bar v1.0.0`
+    ... which satisfies dependency `bar = "^1.0"` of package `bar_wrapper v1.1.0`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `feat_activator v1.1.0`
+    ... which satisfies dependency `feat_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+perhaps a crate was updated and forgotten to be re-vendored?
 [ERROR] failed to select a version for the requirement `the_feat = "^1.0"`
 candidate versions found which didn't match: 0.1.0
 location searched: `dummy-registry` index (which is replacing registry `crates-io`)
@@ -1590,10 +2032,233 @@ perhaps a crate was updated and forgotten to be re-vendored?
         p.change_file("Cargo.lock", "version = 5");
 
         p.cargo("check -Znext-lockfile-bump")
+            .env("CARGO_LOG", "trace")
             .with_status(101)
             .masquerade_as_nightly_cargo(&["weak_dep_check"])
             .with_stderr_data(str![[r#"
+   0.000362975s TRACE cargo: start="2026-02-07T09:32:45.782465273Z"
+   0.001603436s DEBUG main:cli: cargo::util::context: load config from file path="[ROOT]/home/.cargo/config.toml" why_load=FileDiscovery includes=true
+   0.002017929s TRACE main:cli: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005628823s TRACE main:expand_aliases: cargo::util::context: get cv ConfigKey { env: "CARGO_ALIAS_CHECK", parts: [("alias", 5), ("check", 11)] }
+   0.005796469s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_UNSTABLE", parts: [("unstable", 5)] }
+   0.005825043s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005928759s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_NET", parts: [("net", 5)] }
+   0.012621990s TRACE main:init_git:init_git_transports: cargo::util::context: get cv ConfigKey { env: "CARGO_HTTP", parts: [("http", 5)] }
+   0.014250684s TRACE main:exec:workspace:read_manifest{path="[ROOT]/foo/Cargo.toml" source_id=SourceId { inner: SourceIdInner { url: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }, canonical_url: CanonicalUrl(Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }), kind: Path, precise: None, registry_key: None } }}:to_real_manifest:gather_dependencies: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.014657912s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_BUILD", parts: [("build", 5)] }
+   0.014890401s DEBUG main:exec:workspace:find_members: cargo::core::workspace: find_members - only me as a member
+   0.014938221s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_RESOLVER", parts: [("resolver", 5)] }
+   0.015333958s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.015586284s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.015643773s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.015697594s TRACE main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::context: get cv ConfigKey { env: "CARGO_ENV", parts: [("env", 5)] }
+   0.015809385s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.015826467s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.028630270s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.028777608s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: rustc info cache miss
+   0.028812414s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: running `rustc - --crate-name ___ --print=file-names --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings`
+   0.045654838s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.045778912s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET", parts: [("target", 5)] }
+   0.045847001s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::context::target: Got all targets {}
+   0.045935879s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046105449s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.046177845s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.046243750s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046308482s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.046353417s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.046418610s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.046482500s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.046545800s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.046608989s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.046652431s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.046861145s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046896712s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.046924404s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.047014494s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.047040072s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.047086139s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io", parts: [("source", 5), ("crates-io", 12)] }
+   0.047211566s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047237485s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047263634s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.047333857s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.047363894s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.047654231s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:load_pkg_lockfile: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.047848608s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::core::registry: load/locked   [ROOT]/foo
+   0.047905426s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.047940782s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::ops::resolve: return=Ok({})
+   0.047976620s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::ops::resolve: previous: graph: Graph {
+}
+
+features: {
+}
+   0.048045700s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed bar_activator
+   0.048081017s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed feat_activator
+   0.048119179s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks: cargo::core::registry: clear_lock
+   0.048181817s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: locking summary of foo v0.1.0 ([ROOT]/foo)
+   0.048226822s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	bar_activator/^1.0/registry `crates-io`
+   0.048253232s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.048267659s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	feat_activator/^1.0/registry `crates-io`
+   0.048282116s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.048369111s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: initial activation: foo v0.1.0 ([ROOT]/foo)
+   0.048426870s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating foo v0.1.0 ([ROOT]/foo)
+   0.048527770s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/missing  registry `crates-io`
+   0.048548920s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: loading source registry `crates-io`
+   0.048566744s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: loading: registry `crates-io`
+   0.048589116s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to dummy-registry
+   0.048651483s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048687121s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048721526s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.048864115s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to registry dummy-registry
+   0.048893520s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `dummy-registry`
+   0.048959765s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `crates-io`
+   0.049098527s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: updating the index
+   0.049354680s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: acquiring registry index lock
 [UPDATING] `dummy-registry` index
+   0.050093124s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: skipping gc as there's only 2 pack files
+   0.050418929s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: doing a fetch for [ROOTURL]/registry
+   0.050453544s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: git-fetch: backend="libgit2"
+   0.050627412s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: initiating fetch of ["+HEAD:refs/remotes/origin/HEAD"] from [ROOTURL]/registry
+   0.073380321s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_activator"
+   0.074068890s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.1.0
+   0.074200408s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.1.0
+   0.074260832s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.074321898s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.074601796s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.1.1
+   0.074706854s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.1.1
+   0.074761768s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.074819146s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.074909506s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.075139531s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "fe/at/feat_activator"
+   0.075295124s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.0
+   0.075335961s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.075355278s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.075375396s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.075526270s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>feat_activator 1 candidates
+   0.075557269s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>feat_activator trying 1.1.0
+   0.075604338s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.0
+   0.075674250s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.075816438s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_wrapper"
+   0.076052273s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.0
+   0.076100955s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.076121734s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076142383s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.076270314s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.1
+   0.076308527s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.076327182s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076346558s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.076462377s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.2
+   0.076500709s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.076519154s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076537499s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.076631947s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator 2 candidates
+   0.076661413s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator trying 1.1.1
+   0.076718230s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.1.1
+   0.076783914s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.076825172s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.076844338s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076863524s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.076890645s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.076907547s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076924619s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.076957712s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.076976076s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.076995854s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.077077658s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper 3 candidates
+   0.077103357s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.2
+   0.077144825s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.077256596s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.077313934s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.2
+   0.077349100s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.077372044s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.077423000s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.077670727s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "3/b/bar"
+   0.077837572s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar/1.0.0
+   0.077890682s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar v1.0.0
+   0.077909738s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	the_feat/^1.0/registry `crates-io`
+   0.077928764s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.078025847s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar 1 candidates
+   0.078051205s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar trying 1.0.0
+   0.078091712s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.078151905s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.078301588s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "th/e_/the_feat"
+   0.078377521s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[6]>the_feat 0 candidates
+   0.078404582s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[6]>the_feat -- no candidates
+   0.078429118s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: the_feat = "^1.0" adding a skip {}
+   0.078477991s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.1
+   0.078515962s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.078597797s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.1/", source: /"registry `crates-io`/" }: Semver})!"
+   0.078645216s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.1
+   0.078674121s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.1 is already activated
+   0.078694790s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.078791993s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar 1 candidates
+   0.078816029s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar trying 1.0.0
+   0.078848861s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.078939291s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar skipping 1.0.0 
+   0.078990788s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar -- no candidates
+   0.079014744s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar = "^1.0" adding a skip {}
+   0.079051824s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.0
+   0.079081970s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.079153626s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.0/", source: /"registry `crates-io`/" }: Semver})!"
+   0.079196687s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.0
+   0.079225040s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.0 is already activated
+   0.079245118s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.079319809s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper skipping 1.1.0 
+   0.079343113s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper -- no candidates
+   0.079373350s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar_wrapper = "^1.1" adding a skip {PackageId { name: "bar_wrapper", version: "1.1.0", source: "registry `crates-io`" }: Semver}
+   0.079484260s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator trying 1.1.0
+   0.079518655s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.1.0
+   0.079587635s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper 3 candidates
+   0.079613263s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.2
+   0.079645203s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.079688796s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.079726567s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.2
+   0.079752576s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.079772514s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.079844560s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper skipping 1.1.2 
+   0.079867012s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper -- no candidates
+   0.079892410s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar_wrapper = "^1.1" adding a skip {PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }: Semver}
+   0.079986277s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.1
+   0.080031883s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.080076718s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.1/", source: /"registry `crates-io`/" }: Semver})!"
+   0.080115240s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.1
+   0.080141360s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.1 is already activated
+   0.080161688s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.080232983s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper skipping 1.1.1 
+   0.080255976s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper -- no candidates
+   0.080280502s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar_wrapper = "^1.1" adding a skip {PackageId { name: "bar_wrapper", version: "1.1.1", source: "registry `crates-io`" }: Semver}
+   0.080359521s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar_wrapper = "^1.1" adding a skip {PackageId { name: "bar_activator", version: "1.1.0", source: "registry `crates-io`" }: Semver}
+   0.080402442s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper = "^1.1" skip as not solving bar_activator v1.1.0: {PackageId { name: "bar_activator", version: "1.1.0", source: "registry `crates-io`" }: Semver}
+   0.080435495s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: no candidates found
+   0.080855077s  WARN main:exec:compile_ws:create_bcx: cargo::util::rustc: failed to update rustc info cache: failed to write `[ROOT]/foo/target/.rustc_info.json`
+   0.081025999s DEBUG cargo: exit_with_error; err=CliError { [ERROR] Some(failed to select a version for `bar_wrapper`.
+    ... required by package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+versions that meet the requirements `^1.1` are: 1.1.2, 1.1.1, 1.1.0
+
+all possible versions conflict with previously selected packages.
+
+  previously selected package `bar_wrapper v1.1.1`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+
+failed to select a version for `bar_wrapper` which could resolve this conflict), exit_code: 101 }
+   0.081067758s DEBUG cargo: display_error; err=failed to select a version for `bar_wrapper`.
+    ... required by package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+versions that meet the requirements `^1.1` are: 1.1.2, 1.1.1, 1.1.0
+
+all possible versions conflict with previously selected packages.
+
+  previously selected package `bar_wrapper v1.1.1`
+    ... which satisfies dependency `bar_wrapper = "^1.1"` of package `bar_activator v1.1.0`
+    ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
+
+failed to select a version for `bar_wrapper` which could resolve this conflict
 [ERROR] failed to select a version for `bar_wrapper`.
     ... required by package `bar_activator v1.1.0`
     ... which satisfies dependency `bar_activator = "^1.0"` of package `foo v0.1.0 ([ROOT]/foo)`
@@ -1936,23 +2601,1844 @@ perhaps a crate was updated and forgotten to be re-vendored?
         p.change_file("Cargo.lock", "version = 5");
 
         p.cargo("check -Znext-lockfile-bump")
+            .env("CARGO_LOG", "trace")
             .masquerade_as_nightly_cargo(&["weak_dep_check"])
             .with_stderr_data(
                 str![[r#"
+   0.000265140s TRACE cargo: start="2026-02-07T09:34:30.191443362Z"
+   0.001284594s DEBUG main:cli: cargo::util::context: load config from file path="[ROOT]/home/.cargo/config.toml" why_load=FileDiscovery includes=true
+   0.001654953s TRACE main:cli: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005307276s TRACE main:expand_aliases: cargo::util::context: get cv ConfigKey { env: "CARGO_ALIAS_CHECK", parts: [("alias", 5), ("check", 11)] }
+   0.005480313s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_UNSTABLE", parts: [("unstable", 5)] }
+   0.005507524s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.005606641s TRACE main:configure_gctx: cargo::util::context: get cv ConfigKey { env: "CARGO_NET", parts: [("net", 5)] }
+   0.011962236s TRACE main:init_git:init_git_transports: cargo::util::context: get cv ConfigKey { env: "CARGO_HTTP", parts: [("http", 5)] }
+   0.013675930s TRACE main:exec:workspace:read_manifest{path="[ROOT]/foo/Cargo.toml" source_id=SourceId { inner: SourceIdInner { url: Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }, canonical_url: CanonicalUrl(Url { scheme: "file", cannot_be_a_base: false, username: "", password: None, host: None, port: None, path: "[ROOT]/foo", query: None, fragment: None }), kind: Path, precise: None, registry_key: None } }}:to_real_manifest:gather_dependencies: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.014133263s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_BUILD", parts: [("build", 5)] }
+   0.014374849s DEBUG main:exec:workspace:find_members: cargo::core::workspace: find_members - only me as a member
+   0.014426477s TRACE main:exec:workspace: cargo::util::context: get cv ConfigKey { env: "CARGO_RESOLVER", parts: [("resolver", 5)] }
+   0.014782709s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_TERM", parts: [("term", 5)] }
+   0.015009507s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.015049452s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.015084949s TRACE main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::context: get cv ConfigKey { env: "CARGO_ENV", parts: [("env", 5)] }
+   0.015153208s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.015167675s DEBUG main:exec:compile_ws:create_bcx:new:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.027306765s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.027506342s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: rustc info cache miss
+   0.027532180s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::rustc: running `rustc - --crate-name ___ --print=file-names --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings`
+   0.041979056s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.042155178s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET", parts: [("target", 5)] }
+   0.042229619s DEBUG main:exec:compile_ws:create_bcx:new:new: cargo::util::context::target: Got all targets {}
+   0.042345237s TRACE main:exec:compile_ws:create_bcx:new:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.042505750s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.042577675s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.042614104s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.042645794s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.042668236s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.042700808s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.042732247s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustflags", 37)] }
+   0.042762935s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTDOCFLAGS", parts: [("target", 5), ("[HOST_TARGET]", 12), ("rustdocflags", 37)] }
+   0.042793242s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("linker", 37)] }
+   0.042813380s TRACE main:exec:compile_ws:create_bcx:new: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU", parts: [("target", 5), ("[HOST_TARGET]", 12)] }
+   0.043140187s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.043200230s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.043230317s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.043344593s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.043401370s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE", parts: [("source", 5)] }
+   0.043460902s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io", parts: [("source", 5), ("crates-io", 12)] }
+   0.043600676s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.043628208s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.043657183s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_SOURCE_crates-io_REPLACE_WITH", parts: [("source", 5), ("crates-io", 12), ("replace-with", 22)] }
+   0.043748034s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_CRATES_IO_PROTOCOL", parts: [("registries", 5), ("crates-io", 16), ("protocol", 26)] }
+   0.043779343s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRY_INDEX", parts: [("registry", 5), ("index", 14)] }
+   0.044316517s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:load_pkg_lockfile: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.044697887s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::core::registry: load/locked   [ROOT]/foo
+   0.044763711s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::util::context: get cv ConfigKey { env: "CARGO_PATCH", parts: [("patch", 5)] }
+   0.044801462s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_patch_entries: cargo::ops::resolve: return=Ok({})
+   0.044826209s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous: cargo::ops::resolve: previous: graph: Graph {
+}
+
+features: {
+}
+   0.044900920s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed bar_activator
+   0.044939122s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks:poison: cargo::ops::resolve: poisoning registry `crates-io` because foo v0.1.0 ([ROOT]/foo) looks like it changed feat_activator
+   0.044974459s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:register_previous_locks: cargo::core::registry: clear_lock
+   0.045031807s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: locking summary of foo v0.1.0 ([ROOT]/foo)
+   0.045070961s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	bar_activator/^1.0/registry `crates-io`
+   0.045094315s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.045107420s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	feat_activator/^1.0/registry `crates-io`
+   0.045120835s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:registry.lock: cargo::core::registry: 	nope, unlocked
+   0.045192460s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: initial activation: foo v0.1.0 ([ROOT]/foo)
+   0.045239198s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating foo v0.1.0 ([ROOT]/foo)
+   0.045307257s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/missing  registry `crates-io`
+   0.045324920s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: loading source registry `crates-io`
+   0.045339628s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: loading: registry `crates-io`
+   0.045360457s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to dummy-registry
+   0.045401274s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.045430540s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.045459234s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::util::context: get cv ConfigKey { env: "CARGO_REGISTRIES_DUMMY_REGISTRY_INDEX", parts: [("registries", 5), ("dummy-registry", 16), ("index", 31)] }
+   0.045564753s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::config: following pointer to registry dummy-registry
+   0.045587736s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `dummy-registry`
+   0.045641367s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::source_id: loading SourceId; registry `crates-io`
+   0.045738060s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: updating the index
+   0.045868466s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::registry::remote: acquiring registry index lock
 [UPDATING] `dummy-registry` index
+   0.046264373s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: skipping gc as there's only 2 pack files
+   0.046456656s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: doing a fetch for [ROOTURL]/registry
+   0.046480952s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: git-fetch: backend="libgit2"
+   0.046620024s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve:block_until_ready: cargo::sources::git::utils: initiating fetch of ["+HEAD:refs/remotes/origin/HEAD"] from [ROOTURL]/registry
+   0.049888393s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_activator"
+   0.050184932s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.1.0
+   0.050239145s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.1.0
+   0.050259313s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.050277778s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.050363409s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_activator/1.0.0
+   0.050391943s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.0.0
+   0.050407262s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.0/registry `crates-io`
+   0.050421689s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.050486502s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.050645221s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "fe/at/feat_activator"
+   0.050763574s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry feat_activator/1.1.0
+   0.050797158s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.050820041s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.050835640s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.051017854s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>feat_activator 1 candidates
+   0.051048272s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>feat_activator trying 1.1.0
+   0.051090421s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.0
+   0.051158029s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.051353337s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "ba/r_/bar_wrapper"
+   0.051675415s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.0
+   0.051735198s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.051754184s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.051770605s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.051935216s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.1
+   0.051970392s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.051988246s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.052003044s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052118081s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar_wrapper/1.1.2
+   0.052150191s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.052165530s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.052179627s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052281800s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator 2 candidates
+   0.052310845s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator trying 1.1.0
+   0.052369786s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.1.0
+   0.052432264s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.052470987s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.052489351s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.052504019s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052523306s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.052537382s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.052550497s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052567800s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.052581576s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.052594710s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.052662899s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper 3 candidates
+   0.052684971s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.2
+   0.052718794s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.052817000s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.052863307s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.2
+   0.052905868s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.052928410s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.052975900s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.053187519s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "3/b/bar"
+   0.053370755s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: json parsed registry bar/1.0.0
+   0.053424246s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar v1.0.0
+   0.053441639s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	the_feat/^1.0/registry `crates-io`
+   0.053457459s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.053551666s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar 1 candidates
+   0.053573928s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar trying 1.0.0
+   0.053614234s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.053670200s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.053840241s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::sources::registry::index: fast path for registry cache of "th/e_/the_feat"
+   0.053949327s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[6]>the_feat 0 candidates
+   0.053979985s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar[6]>the_feat -- no candidates
+   0.054002527s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: the_feat = "^1.0" adding a skip {}
+   0.054052371s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.1
+   0.054092557s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.054173991s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.1/", source: /"registry `crates-io`/" }: Semver})!"
+   0.054218324s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.1
+   0.054242751s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.1 is already activated
+   0.054260725s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.1
+   0.054349863s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar 1 candidates
+   0.054370001s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[5]>bar trying 1.0.0
+   0.054404356s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar v1.0.0
+   0.054473566s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar skipping 1.0.0 
+   0.054493714s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_wrapper[6]>bar -- no candidates
+   0.054510566s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar = "^1.0" adding a skip {}
+   0.054536385s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.0
+   0.054560150s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.054617287s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.0/", source: /"registry `crates-io`/" }: Semver})!"
+   0.054653295s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.0
+   0.054675287s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.0 is already activated
+   0.054691968s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.0
+   0.054750098s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper skipping 1.1.0 
+   0.054769815s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[5]>bar_wrapper -- no candidates
+   0.054788871s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::conflict_cache: bar_wrapper = "^1.1" adding a skip {PackageId { name: "bar_wrapper", version: "1.1.0", source: "registry `crates-io`" }: Semver}
+   0.054880494s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>bar_activator trying 1.0.0
+   0.054920610s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.0.0
+   0.054961427s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.055013295s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.055031199s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.055045926s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.055066746s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.055081013s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.055094368s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.055113424s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.055127420s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.055140665s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.055196250s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper 3 candidates
+   0.055217861s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[3]>bar_wrapper trying 1.1.2
+   0.055247186s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.055288364s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper 3 candidates
+[src/cargo/core/resolver/mod.rs:293:17] s = "Current bar_wrapper, we got conflicts({PackageId { name: /"bar_wrapper/", version: /"1.1.2/", source: /"registry `crates-io`/" }: Semver})!"
+   0.055322328s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[4]>bar_wrapper trying 1.1.2
+   0.055344209s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.055644777s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:resolve: cargo::core::resolver: resolved: graph: Graph {
+  - bar_activator v1.0.0
+    - bar_wrapper v1.1.2
+  - bar_wrapper v1.1.2
+  - feat_activator v1.1.0
+    - bar_wrapper v1.1.2
+  - foo v0.1.0 ([ROOT]/foo)
+    - bar_activator v1.0.0
+    - feat_activator v1.1.0
+}
+
+features: {
+  bar_wrapper v1.1.2: ["feat"]
+}
+   0.299007398s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:save: gc: saving last-use data
+   0.299548659s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:save: gc: insert registry_index RegistryIndex { encoded_registry_name: "-75931e58fecf1736" } 1770456870
+   0.512459519s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry:resolve_with_previous:save: gc: last-use save complete
+   0.513090290s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:write_pkg_lockfile: cargo::ops::lockfile: lockfile - current: V5, default: V4
+   0.526437510s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::ops::cargo_update: {
+    (
+        "bar_activator",
+        SourceId {
+            inner: SourceIdInner {
+                url: Url {
+                    scheme: "https",
+                    cannot_be_a_base: false,
+                    username: "",
+                    password: None,
+                    host: Some(
+                        Domain(
+                            "github.com",
+                        ),
+                    ),
+                    port: None,
+                    path: "/rust-lang/crates.io-index",
+                    query: None,
+                    fragment: None,
+                },
+                canonical_url: CanonicalUrl(
+                    Url {
+                        scheme: "https",
+                        cannot_be_a_base: false,
+                        username: "",
+                        password: None,
+                        host: Some(
+                            Domain(
+                                "github.com",
+                            ),
+                        ),
+                        port: None,
+                        path: "/rust-lang/crates.io-index",
+                        query: None,
+                        fragment: None,
+                    },
+                ),
+                kind: Registry,
+                precise: None,
+                registry_key: Some(
+                    Registry(
+                        "crates-io",
+                    ),
+                ),
+            },
+        },
+    ): PackageDiff {
+        removed: [],
+        added: [
+            PackageId {
+                name: "bar_activator",
+                version: "1.0.0",
+                source: "registry `crates-io`",
+            },
+        ],
+        unchanged: [],
+    },
+    (
+        "bar_wrapper",
+        SourceId {
+            inner: SourceIdInner {
+                url: Url {
+                    scheme: "https",
+                    cannot_be_a_base: false,
+                    username: "",
+                    password: None,
+                    host: Some(
+                        Domain(
+                            "github.com",
+                        ),
+                    ),
+                    port: None,
+                    path: "/rust-lang/crates.io-index",
+                    query: None,
+                    fragment: None,
+                },
+                canonical_url: CanonicalUrl(
+                    Url {
+                        scheme: "https",
+                        cannot_be_a_base: false,
+                        username: "",
+                        password: None,
+                        host: Some(
+                            Domain(
+                                "github.com",
+                            ),
+                        ),
+                        port: None,
+                        path: "/rust-lang/crates.io-index",
+                        query: None,
+                        fragment: None,
+                    },
+                ),
+                kind: Registry,
+                precise: None,
+                registry_key: Some(
+                    Registry(
+                        "crates-io",
+                    ),
+                ),
+            },
+        },
+    ): PackageDiff {
+        removed: [],
+        added: [
+            PackageId {
+                name: "bar_wrapper",
+                version: "1.1.2",
+                source: "registry `crates-io`",
+            },
+        ],
+        unchanged: [],
+    },
+    (
+        "feat_activator",
+        SourceId {
+            inner: SourceIdInner {
+                url: Url {
+                    scheme: "https",
+                    cannot_be_a_base: false,
+                    username: "",
+                    password: None,
+                    host: Some(
+                        Domain(
+                            "github.com",
+                        ),
+                    ),
+                    port: None,
+                    path: "/rust-lang/crates.io-index",
+                    query: None,
+                    fragment: None,
+                },
+                canonical_url: CanonicalUrl(
+                    Url {
+                        scheme: "https",
+                        cannot_be_a_base: false,
+                        username: "",
+                        password: None,
+                        host: Some(
+                            Domain(
+                                "github.com",
+                            ),
+                        ),
+                        port: None,
+                        path: "/rust-lang/crates.io-index",
+                        query: None,
+                        fragment: None,
+                    },
+                ),
+                kind: Registry,
+                precise: None,
+                registry_key: Some(
+                    Registry(
+                        "crates-io",
+                    ),
+                ),
+            },
+        },
+    ): PackageDiff {
+        removed: [],
+        added: [
+            PackageId {
+                name: "feat_activator",
+                version: "1.1.0",
+                source: "registry `crates-io`",
+            },
+        ],
+        unchanged: [],
+    },
+    (
+        "foo",
+        SourceId {
+            inner: SourceIdInner {
+                url: Url {
+                    scheme: "file",
+                    cannot_be_a_base: false,
+                    username: "",
+                    password: None,
+                    host: None,
+                    port: None,
+                    path: "[ROOT]/foo",
+                    query: None,
+                    fragment: None,
+                },
+                canonical_url: CanonicalUrl(
+                    Url {
+                        scheme: "file",
+                        cannot_be_a_base: false,
+                        username: "",
+                        password: None,
+                        host: None,
+                        port: None,
+                        path: "[ROOT]/foo",
+                        query: None,
+                        fragment: None,
+                    },
+                ),
+                kind: Path,
+                precise: None,
+                registry_key: None,
+            },
+        },
+    ): PackageDiff {
+        removed: [],
+        added: [
+            PackageId {
+                name: "foo",
+                version: "0.1.0",
+                source: "[ROOT]/foo",
+            },
+        ],
+        unchanged: [],
+    },
+}
+   0.527204948s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.527269099s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.527324614s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.527338570s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.539162826s  WARN main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::util::rustc: failed to update rustc info cache: failed to write `[ROOT]/foo/target/.rustc_info.json`
 [LOCKING] 3 packages to latest compatible versions
+   0.539309443s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: load/precise  registry `crates-io`
+   0.539383963s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of bar_activator v1.1.0
+   0.539406836s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.539422406s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
+   0.539441903s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of bar_activator v1.0.0
+   0.539454536s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar_wrapper/^1.0/registry `crates-io`
+   0.539473793s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
 [ADDING] bar_activator v1.0.0 (available: v1.1.0)
+   0.539533405s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: load/precise  registry `crates-io`
+   0.539557711s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of bar_wrapper v1.1.0
+   0.539570976s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.539583029s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
+   0.539599790s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of bar_wrapper v1.1.1
+   0.539612464s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.539624257s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
+   0.539640367s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.539656548s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.539668119s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
 [ADDING] bar_wrapper v1.1.2
+   0.539704107s DEBUG main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: load/precise  registry `crates-io`
+   0.539728233s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.539741688s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.539753951s TRACE main:exec:compile_ws:create_bcx:resolve_with_registry: cargo::core::registry: 	nope, unlocked
 [ADDING] feat_activator v1.1.0
+   0.539880801s TRACE main:exec:compile_ws:create_bcx:add_overrides: cargo::util::context: get cv ConfigKey { env: "CARGO_PATHS", parts: [("paths", 5)] }
+   0.540032357s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous: cargo::core::registry: load/locked   [ROOT]/foo
+   0.540072412s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous: cargo::ops::resolve: previous: graph: Graph {
+  - bar_activator v1.0.0
+    - bar_wrapper v1.1.2
+  - bar_wrapper v1.1.2
+  - feat_activator v1.1.0
+    - bar_wrapper v1.1.2
+  - foo v0.1.0 ([ROOT]/foo)
+    - bar_activator v1.0.0
+    - feat_activator v1.1.0
+}
+
+features: {
+  bar_wrapper v1.1.2: ["feat"]
+}
+   0.540241451s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks: cargo::core::registry: clear_lock
+   0.540289602s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: register_lock: bar_activator v1.0.0
+   0.540309079s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: 	-> bar_wrapper v1.1.2
+   0.540331141s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: register_lock: bar_wrapper v1.1.2
+   0.540355266s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: register_lock: feat_activator v1.1.0
+   0.540369102s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: 	-> bar_wrapper v1.1.2
+   0.540389892s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: register_lock: foo v0.1.0 ([ROOT]/foo)
+   0.540413166s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: 	-> bar_activator v1.0.0
+   0.540428154s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:register_previous_locks:register_lock: cargo::core::registry: 	-> feat_activator v1.1.0
+   0.540466326s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:prefer_package_id: cargo::ops::resolve: attempting to prefer bar_activator v1.0.0
+   0.540484550s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:prefer_package_id: cargo::ops::resolve: attempting to prefer bar_wrapper v1.1.2
+   0.540498807s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:prefer_package_id: cargo::ops::resolve: attempting to prefer feat_activator v1.1.0
+   0.540513134s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:prefer_package_id: cargo::ops::resolve: attempting to prefer foo v0.1.0 ([ROOT]/foo)
+   0.540579109s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::registry: locking summary of foo v0.1.0 ([ROOT]/foo)
+   0.540611680s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::registry: 	bar_activator/^1.0/registry `crates-io`
+   0.540632199s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::registry: 	first hit on bar_activator v1.0.0
+   0.540646296s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::dependency: locking dep from `bar_activator` with `^1.0` at registry `crates-io` to bar_activator v1.0.0
+   0.540666013s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::registry: 	feat_activator/^1.0/registry `crates-io`
+   0.540679318s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::registry: 	first hit on feat_activator v1.1.0
+   0.540697913s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:registry.lock: cargo::core::dependency: locking dep from `feat_activator` with `^1.0` at registry `crates-io` to feat_activator v1.1.0
+   0.540780208s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: initial activation: foo v0.1.0 ([ROOT]/foo)
+   0.540824111s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: activating foo v0.1.0 ([ROOT]/foo)
+   0.540911536s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.540984704s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_activator v1.0.0
+   0.541005473s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.0/registry `crates-io`
+   0.541028036s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	first hit on bar_wrapper v1.1.2
+   0.541045609s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::dependency: locking dep from `bar_wrapper` with `^1.0` at registry `crates-io` to bar_wrapper v1.1.2
+   0.541105612s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.541142332s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: locking summary of feat_activator v1.1.0
+   0.541166778s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	bar_wrapper/^1.1/registry `crates-io`
+   0.541183810s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	first hit on bar_wrapper v1.1.2
+   0.541198157s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::dependency: locking dep from `bar_wrapper` with `^1.1` at registry `crates-io` to bar_wrapper v1.1.2
+   0.541328513s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator 1 candidates
+   0.541360523s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: foo[1]>bar_activator trying 1.0.0
+   0.541415137s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: activating bar_activator v1.0.0
+   0.541486271s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.541531055s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.541548939s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.541567694s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.541630633s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator 1 candidates
+   0.541651132s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: foo[2]>feat_activator trying 1.1.0
+   0.541684816s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: activating feat_activator v1.1.0
+   0.541732696s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: load/precise  registry `crates-io`
+   0.541768954s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: locking summary of bar_wrapper v1.1.2
+   0.541786327s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	bar/^1.0/registry `crates-io`
+   0.541804301s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::registry: 	nope, unlocked
+   0.541864905s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper 1 candidates
+   0.541885865s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: bar_activator[3]>bar_wrapper trying 1.1.2
+   0.541935308s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.541996824s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[4]>bar_wrapper 1 candidates
+   0.542018195s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: feat_activator[4]>bar_wrapper trying 1.1.2
+   0.542046959s DEBUG main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver::context: checking if bar_wrapper v1.1.2 is already activated
+   0.542066756s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: activating bar_wrapper v1.1.2
+   0.542605934s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:resolve: cargo::core::resolver: resolved: graph: Graph {
+  - bar_activator v1.0.0
+    - bar_wrapper v1.1.2
+  - bar_wrapper v1.1.2
+  - feat_activator v1.1.0
+    - bar_wrapper v1.1.2
+  - foo v0.1.0 ([ROOT]/foo)
+    - bar_activator v1.0.0
+    - feat_activator v1.1.0
+}
+
+features: {
+  bar_wrapper v1.1.2: ["feat"]
+}
+   0.542824166s TRACE main:exec:compile_ws:create_bcx:resolve_with_previous:save: gc: saving last-use data
+   0.542932811s TRACE main:exec:compile_ws:create_bcx: cargo::core::registry: getting packages; sources=2
+   0.543351180s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: loading config
+   0.543465676s TRACE main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: config loaded
+   0.543577678s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: network: downloading bar_activator v1.0.0 as 0
 [DOWNLOADING] crates ...
+   0.543791451s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: loading config
+   0.543870440s TRACE main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: config loaded
+   0.543968455s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: network: downloading bar_wrapper v1.1.2 as 1
+   0.544092499s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: loading config
+   0.544154867s TRACE main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::registry::remote: config loaded
+   0.544220972s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: network: downloading feat_activator v1.1.0 as 2
+   0.544317103s TRACE main:exec:compile_ws:create_bcx:download_accessible:start: cargo::sources::path: getting packages; id=foo v0.1.0 ([ROOT]/foo)
+   0.544362128s DEBUG main:exec:compile_ws:create_bcx:download_accessible:start: cargo::core::package: foo v0.1.0 ([ROOT]/foo) doesn't need a download
+   0.544559080s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 0 - 2583 bytes of data
+   0.544636065s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 1 - 2583 bytes of data
+   0.544721517s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 2 - 2583 bytes of data
+   0.544751643s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: handles remaining: 0
+   0.544770509s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 2 finished with Ok(())
 [DOWNLOADED] feat_activator v1.1.0 (registry `dummy-registry`)
+   0.559438802s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/Cargo.lock": [NOT_FOUND]
+   0.559530074s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/.cargo_vcs_info.json": [NOT_FOUND]
+   0.560711604s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::ops::cargo_read_manifest: read_package; path=[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/Cargo.toml; source-id=registry `dummy-registry`
+   0.618095904s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::path: getting packages; id=feat_activator v1.1.0 (registry `dummy-registry`)
+   0.618361595s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: handles remaining: 0
+   0.618400188s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 1 finished with Ok(())
 [DOWNLOADED] bar_wrapper v1.1.2 (registry `dummy-registry`)
+   0.619283896s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/Cargo.lock": [NOT_FOUND]
+   0.619342737s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/.cargo_vcs_info.json": [NOT_FOUND]
+   0.619448797s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::ops::cargo_read_manifest: read_package; path=[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/Cargo.toml; source-id=registry `dummy-registry`
+   0.620541860s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::path: getting packages; id=bar_wrapper v1.1.2 (registry `dummy-registry`)
+   0.620687806s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: handles remaining: 0
+   0.620704497s DEBUG main:exec:compile_ws:create_bcx:download_accessible:wait: network: 0 finished with Ok(())
 [DOWNLOADED] bar_activator v1.0.0 (registry `dummy-registry`)
+   0.621509146s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/Cargo.lock": [NOT_FOUND]
+   0.621571603s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::registry: failed to set deterministic mtime for "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/.cargo_vcs_info.json": [NOT_FOUND]
+   0.621677012s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::ops::cargo_read_manifest: read_package; path=[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/Cargo.toml; source-id=registry `dummy-registry`
+   0.622702939s TRACE main:exec:compile_ws:create_bcx:download_accessible:wait: cargo::sources::path: getting packages; id=bar_activator v1.0.0 (registry `dummy-registry`)
+   0.622862830s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: saving last-use data
+   0.622936810s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry_index RegistryIndex { encoded_registry_name: "-75931e58fecf1736" } 1770456870
+   0.623133381s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry crate RegistryCrate { encoded_registry_name: "-75931e58fecf1736", crate_filename: "bar_wrapper-1.1.2.crate", size: 2583 } 1770456870
+   0.623445189s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry crate RegistryCrate { encoded_registry_name: "-75931e58fecf1736", crate_filename: "feat_activator-1.1.0.crate", size: 2583 } 1770456870
+   0.623516103s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry crate RegistryCrate { encoded_registry_name: "-75931e58fecf1736", crate_filename: "bar_activator-1.0.0.crate", size: 2583 } 1770456870
+   0.623559816s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry src RegistrySrc { encoded_registry_name: "-75931e58fecf1736", package_dir: "bar_wrapper-1.1.2", size: Some(251) } 1770456870
+   0.623694280s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry src RegistrySrc { encoded_registry_name: "-75931e58fecf1736", package_dir: "feat_activator-1.1.0", size: Some(230) } 1770456870
+   0.623744845s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: insert registry src RegistrySrc { encoded_registry_name: "-75931e58fecf1736", package_dir: "bar_activator-1.0.0", size: Some(209) } 1770456870
+   0.765136058s TRACE main:exec:compile_ws:create_bcx:download_accessible:save: gc: last-use save complete
+   0.765536314s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_pkg foo 
+   0.765723727s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_pkg bar_activator 
+   0.765804300s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_pkg bar_wrapper 
+   0.765867369s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_pkg feat_activator 
+   0.766002063s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_pkg bar_wrapper 
+   0.766055083s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_fv bar_wrapper  feat
+   0.766090420s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_rec bar_wrapper  feat=feat
+   0.766140324s TRACE main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: activate_fv bar_wrapper  bar?/the_feat
+   0.766209865s DEBUG main:exec:compile_ws:create_bcx:resolve: cargo::core::resolver::features: features={
+    (
+        PackageId {
+            name: "feat_activator",
+            version: "1.1.0",
+            source: "registry `crates-io`",
+        },
+        NormalOrDev,
+    ): {},
+    (
+        PackageId {
+            name: "foo",
+            version: "0.1.0",
+            source: "[ROOT]/foo",
+        },
+        NormalOrDev,
+    ): {},
+    (
+        PackageId {
+            name: "bar_wrapper",
+            version: "1.1.2",
+            source: "registry `crates-io`",
+        },
+        NormalOrDev,
+    ): {
+        "feat",
+    },
+    (
+        PackageId {
+            name: "bar_activator",
+            version: "1.0.0",
+            source: "registry `crates-io`",
+        },
+        NormalOrDev,
+    ): {},
+}
+   0.766870602s TRACE main:exec:compile_ws:create_bcx:save: gc: saving last-use data
+   0.767095056s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_PROFILE_RELEASE", parts: [("profile", 5), ("release", 13)] }
+   0.767170087s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_PROFILE_TEST", parts: [("profile", 5), ("test", 13)] }
+   0.767224009s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_PROFILE_BENCH", parts: [("profile", 5), ("bench", 13)] }
+   0.767275446s TRACE main:exec:compile_ws:create_bcx: cargo::util::context: get cv ConfigKey { env: "CARGO_PROFILE_DEV", parts: [("profile", 5), ("dev", 13)] }
+   0.767484000s DEBUG main:exec:compile_ws:create_bcx:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: adding rustup info to rustc fingerprint
+   0.767550515s DEBUG main:exec:compile_ws:create_bcx:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: failed to read rustc info cache: failed to read `[ROOT]/foo/target/.rustc_info.json`
+   0.767625817s DEBUG main:exec:compile_ws:create_bcx:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: rustc info cache miss
+   0.767651345s DEBUG main:exec:compile_ws:create_bcx:new{path="rustc" wrapper=None workspace_wrapper=None rustup_rustc="[ROOT]/home/.cargo/bin/rustc" cache_location=Some("[ROOT]/foo/target/.rustc_info.json")}: cargo::util::rustc: running `rustc -vV`
+   0.782027667s  WARN main:exec:compile_ws:create_bcx: cargo::util::rustc: failed to update rustc info cache: failed to write `[ROOT]/foo/target/.rustc_info.json`
+   0.782644321s TRACE main:exec:compile_ws:create_bcx:build_unit_dependencies: cargo::core::compiler::unit_dependencies: ALL UNIT DEPENDENCIES {
+    Unit {
+        pkg: Package {
+            id: PackageId {
+                name: "bar_wrapper",
+                version: "1.1.2",
+                source: "registry `crates-io`",
+            },
+            ..: "..",
+        },
+        target: TargetInner {
+            name_inferred: true,
+            ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+        },
+        profile: Profile {
+            incremental: false,
+            ..: default_dev(),
+        },
+        kind: Target(
+            Tuple(
+                "[HOST_TARGET]",
+            ),
+        ),
+        mode: Check {
+            test: false,
+        },
+        features: [
+            "feat",
+        ],
+        rustflags: [],
+        rustdocflags: [],
+        links_overrides: {},
+        artifact: false,
+        artifact_target_for_features: None,
+        is_std: false,
+        dep_hash: 0,
+    }: [],
+    Unit {
+        pkg: Package {
+            id: PackageId {
+                name: "bar_activator",
+                version: "1.0.0",
+                source: "registry `crates-io`",
+            },
+            ..: "..",
+        },
+        target: TargetInner {
+            name_inferred: true,
+            ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+        },
+        profile: Profile {
+            incremental: false,
+            ..: default_dev(),
+        },
+        kind: Target(
+            Tuple(
+                "[HOST_TARGET]",
+            ),
+        ),
+        mode: Check {
+            test: false,
+        },
+        features: [],
+        rustflags: [],
+        rustdocflags: [],
+        links_overrides: {},
+        artifact: false,
+        artifact_target_for_features: None,
+        is_std: false,
+        dep_hash: 0,
+    }: [
+        UnitDep {
+            unit: Unit {
+                pkg: Package {
+                    id: PackageId {
+                        name: "bar_wrapper",
+                        version: "1.1.2",
+                        source: "registry `crates-io`",
+                    },
+                    ..: "..",
+                },
+                target: TargetInner {
+                    name_inferred: true,
+                    ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+                },
+                profile: Profile {
+                    incremental: false,
+                    ..: default_dev(),
+                },
+                kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                mode: Check {
+                    test: false,
+                },
+                features: [
+                    "feat",
+                ],
+                rustflags: [],
+                rustdocflags: [],
+                links_overrides: {},
+                artifact: false,
+                artifact_target_for_features: None,
+                is_std: false,
+                dep_hash: 0,
+            },
+            unit_for: UnitFor {
+                host: false,
+                host_features: false,
+                panic_setting: ReadProfile,
+                root_compile_kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                artifact_target_for_features: None,
+            },
+            extern_crate_name: "bar_wrapper",
+            dep_name: None,
+            public: false,
+            noprelude: false,
+        },
+    ],
+    Unit {
+        pkg: Package {
+            id: PackageId {
+                name: "foo",
+                version: "0.1.0",
+                source: "[ROOT]/foo",
+            },
+            ..: "..",
+        },
+        target: TargetInner {
+            name_inferred: true,
+            ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+        },
+        profile: Profile {
+            incremental: false,
+            ..: default_dev(),
+        },
+        kind: Target(
+            Tuple(
+                "[HOST_TARGET]",
+            ),
+        ),
+        mode: Check {
+            test: false,
+        },
+        features: [],
+        rustflags: [],
+        rustdocflags: [],
+        links_overrides: {},
+        artifact: false,
+        artifact_target_for_features: None,
+        is_std: false,
+        dep_hash: 0,
+    }: [
+        UnitDep {
+            unit: Unit {
+                pkg: Package {
+                    id: PackageId {
+                        name: "bar_activator",
+                        version: "1.0.0",
+                        source: "registry `crates-io`",
+                    },
+                    ..: "..",
+                },
+                target: TargetInner {
+                    name_inferred: true,
+                    ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+                },
+                profile: Profile {
+                    incremental: false,
+                    ..: default_dev(),
+                },
+                kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                mode: Check {
+                    test: false,
+                },
+                features: [],
+                rustflags: [],
+                rustdocflags: [],
+                links_overrides: {},
+                artifact: false,
+                artifact_target_for_features: None,
+                is_std: false,
+                dep_hash: 0,
+            },
+            unit_for: UnitFor {
+                host: false,
+                host_features: false,
+                panic_setting: ReadProfile,
+                root_compile_kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                artifact_target_for_features: None,
+            },
+            extern_crate_name: "bar_activator",
+            dep_name: None,
+            public: false,
+            noprelude: false,
+        },
+        UnitDep {
+            unit: Unit {
+                pkg: Package {
+                    id: PackageId {
+                        name: "feat_activator",
+                        version: "1.1.0",
+                        source: "registry `crates-io`",
+                    },
+                    ..: "..",
+                },
+                target: TargetInner {
+                    name_inferred: true,
+                    ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+                },
+                profile: Profile {
+                    incremental: false,
+                    ..: default_dev(),
+                },
+                kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                mode: Check {
+                    test: false,
+                },
+                features: [],
+                rustflags: [],
+                rustdocflags: [],
+                links_overrides: {},
+                artifact: false,
+                artifact_target_for_features: None,
+                is_std: false,
+                dep_hash: 0,
+            },
+            unit_for: UnitFor {
+                host: false,
+                host_features: false,
+                panic_setting: ReadProfile,
+                root_compile_kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                artifact_target_for_features: None,
+            },
+            extern_crate_name: "feat_activator",
+            dep_name: None,
+            public: false,
+            noprelude: false,
+        },
+    ],
+    Unit {
+        pkg: Package {
+            id: PackageId {
+                name: "feat_activator",
+                version: "1.1.0",
+                source: "registry `crates-io`",
+            },
+            ..: "..",
+        },
+        target: TargetInner {
+            name_inferred: true,
+            ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+        },
+        profile: Profile {
+            incremental: false,
+            ..: default_dev(),
+        },
+        kind: Target(
+            Tuple(
+                "[HOST_TARGET]",
+            ),
+        ),
+        mode: Check {
+            test: false,
+        },
+        features: [],
+        rustflags: [],
+        rustdocflags: [],
+        links_overrides: {},
+        artifact: false,
+        artifact_target_for_features: None,
+        is_std: false,
+        dep_hash: 0,
+    }: [
+        UnitDep {
+            unit: Unit {
+                pkg: Package {
+                    id: PackageId {
+                        name: "bar_wrapper",
+                        version: "1.1.2",
+                        source: "registry `crates-io`",
+                    },
+                    ..: "..",
+                },
+                target: TargetInner {
+                    name_inferred: true,
+                    ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+                },
+                profile: Profile {
+                    incremental: false,
+                    ..: default_dev(),
+                },
+                kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                mode: Check {
+                    test: false,
+                },
+                features: [
+                    "feat",
+                ],
+                rustflags: [],
+                rustdocflags: [],
+                links_overrides: {},
+                artifact: false,
+                artifact_target_for_features: None,
+                is_std: false,
+                dep_hash: 0,
+            },
+            unit_for: UnitFor {
+                host: false,
+                host_features: false,
+                panic_setting: ReadProfile,
+                root_compile_kind: Target(
+                    Tuple(
+                        "[HOST_TARGET]",
+                    ),
+                ),
+                artifact_target_for_features: None,
+            },
+            extern_crate_name: "bar_wrapper",
+            dep_name: None,
+            public: false,
+            noprelude: false,
+        },
+    ],
+}
+   0.783608932s TRACE main:exec:compile_ws: cargo::util::context: get cv ConfigKey { env: "CARGO_CACHE_AUTO_CLEAN_FREQUENCY", parts: [("cache", 5), ("auto-clean-frequency", 11)] }
+   0.783648496s TRACE main:exec:compile_ws: gc: should_run_auto_gc
+   0.783753835s TRACE main:exec:compile_ws: gc: last auto gc was 1770456870, skipping
+   0.783829768s TRACE main:exec:compile_ws: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.783868351s TRACE main:exec:compile_ws: cargo::util::context: get cv ConfigKey { env: "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER", parts: [("target", 5), ("[HOST_TARGET]", 12), ("runner", 37)] }
+   0.795060724s DEBUG main:exec:compile_ws:compile:check_collisions: cargo::core::compiler::build_runner::compilation_files: Target filenames: [OutputFile { path: "[ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta", hardlink: None, export_path: None, flavor: Rmeta }]
+   0.795174088s DEBUG main:exec:compile_ws:compile:check_collisions: cargo::core::compiler::build_runner::compilation_files: Target filenames: [OutputFile { path: "[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta", hardlink: None, export_path: None, flavor: Rmeta }]
+   0.795243810s DEBUG main:exec:compile_ws:compile:check_collisions: cargo::core::compiler::build_runner::compilation_files: Target filenames: [OutputFile { path: "[ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta", hardlink: None, export_path: None, flavor: Rmeta }]
+   0.795308211s DEBUG main:exec:compile_ws:compile:check_collisions: cargo::core::compiler::build_runner::compilation_files: Target filenames: [OutputFile { path: "[ROOT]/foo/target/debug/deps/libfoo-[HASH].rmeta", hardlink: None, export_path: None, flavor: Rmeta }]
+   0.795673000s DEBUG main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:prepare_target{force=false package_id=foo v0.1.0 ([ROOT]/foo) target="foo"}: cargo::core::compiler::fingerprint: fingerprint at: [ROOT]/foo/target/debug/.fingerprint/foo-[HASH]/lib-foo
+   0.796075039s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:prepare_target{force=false package_id=foo v0.1.0 ([ROOT]/foo) target="foo"}: cargo::core::compiler::fingerprint: fingerprint error for foo v0.1.0 ([ROOT]/foo)/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }
+   0.796141444s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:prepare_target{force=false package_id=foo v0.1.0 ([ROOT]/foo) target="foo"}: cargo::core::compiler::fingerprint:     err: failed to read `[ROOT]/foo/target/debug/.fingerprint/foo-[HASH]/lib-foo`
+
+Caused by:
+    [NOT_FOUND]
+   0.805344002s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}: cargo::core::compiler::output_sbom: building sbom graph for foo v0.1.0 ([ROOT]/foo)
+   0.805538889s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge foo v0.1.0 ([ROOT]/foo) -> bar_activator v1.0.0 (Normal)
+   0.805630021s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge foo v0.1.0 ([ROOT]/foo) -> feat_activator v1.1.0 (Normal)
+   0.805703831s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge feat_activator v1.1.0 -> bar_wrapper v1.1.2 (Normal)
+   0.805749437s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge bar_activator v1.0.0 -> bar_wrapper v1.1.2 (Normal)
+   0.806314644s DEBUG main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=bar_activator v1.0.0 target="bar_activator"}: cargo::core::compiler::fingerprint: fingerprint at: [ROOT]/foo/target/debug/.fingerprint/bar_activator-[HASH]/lib-bar_activator
+   0.806422577s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=bar_activator v1.0.0 target="bar_activator"}: cargo::core::compiler::fingerprint: fingerprint error for bar_activator v1.0.0/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }
+   0.806518408s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=bar_activator v1.0.0 target="bar_activator"}: cargo::core::compiler::fingerprint:     err: failed to read `[ROOT]/foo/target/debug/.fingerprint/bar_activator-[HASH]/lib-bar_activator`
+
+Caused by:
+    [NOT_FOUND]
+   0.807095798s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}: cargo::core::compiler::output_sbom: building sbom graph for bar_activator v1.0.0
+   0.807138268s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge bar_activator v1.0.0 -> bar_wrapper v1.1.2 (Normal)
+   0.807387168s DEBUG main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 } force_rebuild=false}:prepare_target{force=false package_id=bar_wrapper v1.1.2 target="bar_wrapper"}: cargo::core::compiler::fingerprint: fingerprint at: [ROOT]/foo/target/debug/.fingerprint/bar_wrapper-[HASH]/lib-bar_wrapper
+   0.807435228s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 } force_rebuild=false}:prepare_target{force=false package_id=bar_wrapper v1.1.2 target="bar_wrapper"}: cargo::core::compiler::fingerprint: fingerprint error for bar_wrapper v1.1.2/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }
+   0.807469954s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 } force_rebuild=false}:prepare_target{force=false package_id=bar_wrapper v1.1.2 target="bar_wrapper"}: cargo::core::compiler::fingerprint:     err: failed to read `[ROOT]/foo/target/debug/.fingerprint/bar_wrapper-[HASH]/lib-bar_wrapper`
+
+Caused by:
+    [NOT_FOUND]
+   0.807839281s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 } force_rebuild=false}: cargo::core::compiler::output_sbom: building sbom graph for bar_wrapper v1.1.2
+   0.808154065s DEBUG main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=feat_activator v1.1.0 target="feat_activator"}: cargo::core::compiler::fingerprint: fingerprint at: [ROOT]/foo/target/debug/.fingerprint/feat_activator-[HASH]/lib-feat_activator
+   0.808204891s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=feat_activator v1.1.0 target="feat_activator"}: cargo::core::compiler::fingerprint: fingerprint error for feat_activator v1.1.0/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }
+   0.808240598s  INFO main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}:prepare_target{force=false package_id=feat_activator v1.1.0 target="feat_activator"}: cargo::core::compiler::fingerprint:     err: failed to read `[ROOT]/foo/target/debug/.fingerprint/feat_activator-[HASH]/lib-feat_activator`
+
+Caused by:
+    [NOT_FOUND]
+   0.808716757s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}: cargo::core::compiler::output_sbom: building sbom graph for feat_activator v1.1.0
+   0.808772152s TRACE main:exec:compile_ws:compile:compile{unit=Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 } force_rebuild=false}:compile{unit=Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 } force_rebuild=false}: cargo::core::compiler::output_sbom: adding sbom edge feat_activator v1.1.0 -> bar_wrapper v1.1.2 (Normal)
+   0.809342899s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: queue: DependencyQueue {
+    dep_map: {
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_wrapper",
+                    version: "1.1.2",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [
+                "feat",
+            ],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 2069994364910194474,
+        }: (
+            {},
+            Job { ... },
+        ),
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_activator",
+                    version: "1.0.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: (
+            {
+                (
+                    Unit {
+                        pkg: Package {
+                            id: PackageId {
+                                name: "bar_wrapper",
+                                version: "1.1.2",
+                                source: "registry `crates-io`",
+                            },
+                            ..: "..",
+                        },
+                        target: TargetInner {
+                            name_inferred: true,
+                            ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+                        },
+                        profile: Profile {
+                            incremental: false,
+                            ..: default_dev(),
+                        },
+                        kind: Host,
+                        mode: Check {
+                            test: false,
+                        },
+                        features: [
+                            "feat",
+                        ],
+                        rustflags: [],
+                        rustdocflags: [],
+                        links_overrides: {},
+                        artifact: false,
+                        artifact_target_for_features: None,
+                        is_std: false,
+                        dep_hash: 2069994364910194474,
+                    },
+                    All,
+                ),
+            },
+            Job { ... },
+        ),
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "feat_activator",
+                    version: "1.1.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: (
+            {
+                (
+                    Unit {
+                        pkg: Package {
+                            id: PackageId {
+                                name: "bar_wrapper",
+                                version: "1.1.2",
+                                source: "registry `crates-io`",
+                            },
+                            ..: "..",
+                        },
+                        target: TargetInner {
+                            name_inferred: true,
+                            ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+                        },
+                        profile: Profile {
+                            incremental: false,
+                            ..: default_dev(),
+                        },
+                        kind: Host,
+                        mode: Check {
+                            test: false,
+                        },
+                        features: [
+                            "feat",
+                        ],
+                        rustflags: [],
+                        rustdocflags: [],
+                        links_overrides: {},
+                        artifact: false,
+                        artifact_target_for_features: None,
+                        is_std: false,
+                        dep_hash: 2069994364910194474,
+                    },
+                    All,
+                ),
+            },
+            Job { ... },
+        ),
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "foo",
+                    version: "0.1.0",
+                    source: "[ROOT]/foo",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 6372430505077370690,
+        }: (
+            {
+                (
+                    Unit {
+                        pkg: Package {
+                            id: PackageId {
+                                name: "feat_activator",
+                                version: "1.1.0",
+                                source: "registry `crates-io`",
+                            },
+                            ..: "..",
+                        },
+                        target: TargetInner {
+                            name_inferred: true,
+                            ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+                        },
+                        profile: Profile {
+                            incremental: false,
+                            ..: default_dev(),
+                        },
+                        kind: Host,
+                        mode: Check {
+                            test: false,
+                        },
+                        features: [],
+                        rustflags: [],
+                        rustdocflags: [],
+                        links_overrides: {},
+                        artifact: false,
+                        artifact_target_for_features: None,
+                        is_std: false,
+                        dep_hash: 11186474930324435595,
+                    },
+                    All,
+                ),
+                (
+                    Unit {
+                        pkg: Package {
+                            id: PackageId {
+                                name: "bar_activator",
+                                version: "1.0.0",
+                                source: "registry `crates-io`",
+                            },
+                            ..: "..",
+                        },
+                        target: TargetInner {
+                            name_inferred: true,
+                            ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+                        },
+                        profile: Profile {
+                            incremental: false,
+                            ..: default_dev(),
+                        },
+                        kind: Host,
+                        mode: Check {
+                            test: false,
+                        },
+                        features: [],
+                        rustflags: [],
+                        rustdocflags: [],
+                        links_overrides: {},
+                        artifact: false,
+                        artifact_target_for_features: None,
+                        is_std: false,
+                        dep_hash: 11186474930324435595,
+                    },
+                    All,
+                ),
+            },
+            Job { ... },
+        ),
+    },
+    reverse_dep_map: {
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_activator",
+                    version: "1.0.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: {
+            All: {
+                Unit {
+                    pkg: Package {
+                        id: PackageId {
+                            name: "foo",
+                            version: "0.1.0",
+                            source: "[ROOT]/foo",
+                        },
+                        ..: "..",
+                    },
+                    target: TargetInner {
+                        name_inferred: true,
+                        ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+                    },
+                    profile: Profile {
+                        incremental: false,
+                        ..: default_dev(),
+                    },
+                    kind: Host,
+                    mode: Check {
+                        test: false,
+                    },
+                    features: [],
+                    rustflags: [],
+                    rustdocflags: [],
+                    links_overrides: {},
+                    artifact: false,
+                    artifact_target_for_features: None,
+                    is_std: false,
+                    dep_hash: 6372430505077370690,
+                },
+            },
+        },
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_wrapper",
+                    version: "1.1.2",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [
+                "feat",
+            ],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 2069994364910194474,
+        }: {
+            All: {
+                Unit {
+                    pkg: Package {
+                        id: PackageId {
+                            name: "feat_activator",
+                            version: "1.1.0",
+                            source: "registry `crates-io`",
+                        },
+                        ..: "..",
+                    },
+                    target: TargetInner {
+                        name_inferred: true,
+                        ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+                    },
+                    profile: Profile {
+                        incremental: false,
+                        ..: default_dev(),
+                    },
+                    kind: Host,
+                    mode: Check {
+                        test: false,
+                    },
+                    features: [],
+                    rustflags: [],
+                    rustdocflags: [],
+                    links_overrides: {},
+                    artifact: false,
+                    artifact_target_for_features: None,
+                    is_std: false,
+                    dep_hash: 11186474930324435595,
+                },
+                Unit {
+                    pkg: Package {
+                        id: PackageId {
+                            name: "bar_activator",
+                            version: "1.0.0",
+                            source: "registry `crates-io`",
+                        },
+                        ..: "..",
+                    },
+                    target: TargetInner {
+                        name_inferred: true,
+                        ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+                    },
+                    profile: Profile {
+                        incremental: false,
+                        ..: default_dev(),
+                    },
+                    kind: Host,
+                    mode: Check {
+                        test: false,
+                    },
+                    features: [],
+                    rustflags: [],
+                    rustdocflags: [],
+                    links_overrides: {},
+                    artifact: false,
+                    artifact_target_for_features: None,
+                    is_std: false,
+                    dep_hash: 11186474930324435595,
+                },
+            },
+        },
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "feat_activator",
+                    version: "1.1.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: {
+            All: {
+                Unit {
+                    pkg: Package {
+                        id: PackageId {
+                            name: "foo",
+                            version: "0.1.0",
+                            source: "[ROOT]/foo",
+                        },
+                        ..: "..",
+                    },
+                    target: TargetInner {
+                        name_inferred: true,
+                        ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+                    },
+                    profile: Profile {
+                        incremental: false,
+                        ..: default_dev(),
+                    },
+                    kind: Host,
+                    mode: Check {
+                        test: false,
+                    },
+                    features: [],
+                    rustflags: [],
+                    rustdocflags: [],
+                    links_overrides: {},
+                    artifact: false,
+                    artifact_target_for_features: None,
+                    is_std: false,
+                    dep_hash: 6372430505077370690,
+                },
+            },
+        },
+    },
+    priority: {
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_activator",
+                    version: "1.0.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: 300,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "foo",
+                    version: "0.1.0",
+                    source: "[ROOT]/foo",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 6372430505077370690,
+        }: 200,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_wrapper",
+                    version: "1.1.2",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [
+                "feat",
+            ],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 2069994364910194474,
+        }: 500,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "feat_activator",
+                    version: "1.1.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: 300,
+    },
+    cost: {
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "foo",
+                    version: "0.1.0",
+                    source: "[ROOT]/foo",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 6372430505077370690,
+        }: 100,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_wrapper",
+                    version: "1.1.2",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [
+                "feat",
+            ],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 2069994364910194474,
+        }: 100,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "bar_activator",
+                    version: "1.0.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: 100,
+        Unit {
+            pkg: Package {
+                id: PackageId {
+                    name: "feat_activator",
+                    version: "1.1.0",
+                    source: "registry `crates-io`",
+                },
+                ..: "..",
+            },
+            target: TargetInner {
+                name_inferred: true,
+                ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015),
+            },
+            profile: Profile {
+                incremental: false,
+                ..: default_dev(),
+            },
+            kind: Host,
+            mode: Check {
+                test: false,
+            },
+            features: [],
+            rustflags: [],
+            rustdocflags: [],
+            links_overrides: {},
+            artifact: false,
+            artifact_target_for_features: None,
+            is_std: false,
+            dep_hash: 11186474930324435595,
+        }: 100,
+    },
+}
 [CHECKING] bar_wrapper v1.1.2
-[CHECKING] feat_activator v1.1.0
+   0.810996249s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: start 0: Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 }
+   0.811409128s DEBUG cargo_util::paths: invocation time for "[ROOT]/foo/target/debug/.fingerprint/bar_wrapper-[HASH]" is 1770456871.001403862s
+   0.829034833s TRACE rustc{package="bar_wrapper" process="`rustc --crate-name bar_wrapper --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --cfg 'feature=/"feat/"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values(/"bar/", /"feat/"))' -C metadata=50c94a1aaba4b3f4 -C extra-filename=-4e5042caeb727236 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/bar_wrapper-[HASH].d`
+   0.830064235s TRACE rustc{package="bar_wrapper" process="`rustc --crate-name bar_wrapper --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --cfg 'feature=/"feat/"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values(/"bar/", /"feat/"))' -C metadata=50c94a1aaba4b3f4 -C extra-filename=-4e5042caeb727236 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta`
+   0.830158744s DEBUG rustc{package="bar_wrapper" process="`rustc --crate-name bar_wrapper --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --cfg 'feature=/"feat/"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values(/"bar/", /"feat/"))' -C metadata=50c94a1aaba4b3f4 -C extra-filename=-4e5042caeb727236 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --cap-lints allow`"}: cargo::core::compiler: looks like metadata finished early!
+   0.830265686s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (meta): JobId(0)
+   0.830339725s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 }): Ok(())
+   0.835107514s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/.fingerprint/bar_wrapper-[HASH]/dep-lib-bar_wrapper to 1770456871.001403862s
+   0.835171885s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta to 1770456871.001403862s
+   0.835322209s DEBUG cargo::core::compiler::fingerprint: write fingerprint (3647b12e3f6bb57c) : [ROOT]/foo/target/debug/.fingerprint/bar_wrapper-[HASH]/lib-bar_wrapper
+   0.842486880s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end: JobId(0)
+   0.842604061s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "bar_wrapper", version: "1.1.2", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_wrapper", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_wrapper-1.1.2/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: ["feat"], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 2069994364910194474 }): Ok(())
 [CHECKING] bar_activator v1.0.0
+   0.843065693s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: start 1: Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }
+[CHECKING] feat_activator v1.1.0
+   0.843339019s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: start 2: Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }
+   0.843938440s DEBUG cargo_util::paths: invocation time for "[ROOT]/foo/target/debug/.fingerprint/feat_activator-[HASH]" is 1770456871.033404397s
+   0.843968026s DEBUG cargo_util::paths: invocation time for "[ROOT]/foo/target/debug/.fingerprint/bar_activator-[HASH]" is 1770456871.033404397s
+   0.864519191s TRACE rustc{package="feat_activator" process="`rustc --crate-name feat_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=14de29e21b4f679f -C extra-filename=-ff6966842cbdfe7e --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/feat_activator-[HASH].d`
+   0.866001369s TRACE rustc{package="feat_activator" process="`rustc --crate-name feat_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=14de29e21b4f679f -C extra-filename=-ff6966842cbdfe7e --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta`
+   0.866084836s DEBUG rustc{package="feat_activator" process="`rustc --crate-name feat_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=14de29e21b4f679f -C extra-filename=-ff6966842cbdfe7e --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: looks like metadata finished early!
+   0.866166610s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (meta): JobId(2)
+   0.866214711s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }): Ok(())
+   0.866339767s TRACE rustc{package="bar_activator" process="`rustc --crate-name bar_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6227b879f75a5b78 -C extra-filename=-d363d3c26e4de165 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/bar_activator-[HASH].d`
+   0.867184952s TRACE rustc{package="bar_activator" process="`rustc --crate-name bar_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6227b879f75a5b78 -C extra-filename=-d363d3c26e4de165 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta`
+   0.867245497s DEBUG rustc{package="bar_activator" process="`rustc --crate-name bar_activator --edition=2015 [ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=6227b879f75a5b78 -C extra-filename=-d363d3c26e4de165 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_wrapper=[ROOT]/foo/target/debug/deps/libbar_wrapper-[HASH].rmeta --cap-lints allow`"}: cargo::core::compiler: looks like metadata finished early!
+   0.867348741s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (meta): JobId(1)
+   0.867459641s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }): Ok(())
+   0.869798224s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/.fingerprint/feat_activator-[HASH]/dep-lib-feat_activator to 1770456871.033404397s
+   0.869845283s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta to 1770456871.033404397s
+   0.869961322s DEBUG cargo::core::compiler::fingerprint: write fingerprint (85d8fcfbf93bf0c) : [ROOT]/foo/target/debug/.fingerprint/feat_activator-[HASH]/lib-feat_activator
+   0.870293739s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end: JobId(2)
+   0.870365305s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "feat_activator", version: "1.1.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("feat_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/feat_activator-1.1.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }): Ok(())
+   0.871074663s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/.fingerprint/bar_activator-[HASH]/dep-lib-bar_activator to 1770456871.033404397s
+   0.871111052s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta to 1770456871.033404397s
+   0.871191764s DEBUG cargo::core::compiler::fingerprint: write fingerprint (bae146280c1f5d34) : [ROOT]/foo/target/debug/.fingerprint/bar_activator-[HASH]/lib-bar_activator
+   0.871403223s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end: JobId(1)
+   0.871429483s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "bar_activator", version: "1.0.0", source: "registry `crates-io`" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("bar_activator", ["lib"], "[ROOT]/home/.cargo/registry/src/-[HASH]/bar_activator-1.0.0/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 11186474930324435595 }): Ok(())
 [CHECKING] foo v0.1.0 ([ROOT]/foo)
+   0.871568636s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: start 3: Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 }
+   0.871844596s DEBUG cargo_util::paths: invocation time for "[ROOT]/foo/target/debug/.fingerprint/foo-[HASH]" is 1770456871.061404866s
+   0.888016677s TRACE rustc{package="foo" process="`rustc --crate-name foo --edition=2015 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=f6ab2548de30a07c -C extra-filename=-4502e3727c9e9a90 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_activator=[ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta --extern feat_activator=[ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/foo-[HASH].d`
+   0.889095373s TRACE rustc{package="foo" process="`rustc --crate-name foo --edition=2015 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=f6ab2548de30a07c -C extra-filename=-4502e3727c9e9a90 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_activator=[ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta --extern feat_activator=[ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta`"}: cargo::core::compiler: found directive from rustc: `[ROOT]/foo/target/debug/deps/libfoo-[HASH].rmeta`
+   0.889191384s DEBUG rustc{package="foo" process="`rustc --crate-name foo --edition=2015 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --diagnostic-width=400 --crate-type lib --emit=dep-info,metadata -C embed-bitcode=no -C debuginfo=2 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=f6ab2548de30a07c -C extra-filename=-4502e3727c9e9a90 --out-dir [ROOT]/foo/target/debug/deps -L dependency=[ROOT]/foo/target/debug/deps --extern bar_activator=[ROOT]/foo/target/debug/deps/libbar_activator-[HASH].rmeta --extern feat_activator=[ROOT]/foo/target/debug/deps/libfeat_activator-[HASH].rmeta`"}: cargo::core::compiler: looks like metadata finished early!
+   0.889329014s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (meta): JobId(3)
+   0.889452527s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 }): Ok(())
+   0.894474225s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/.fingerprint/foo-[HASH]/dep-lib-foo to 1770456871.061404866s
+   0.894564976s DEBUG cargo_util::paths: set file mtime [ROOT]/foo/target/debug/deps/libfoo-[HASH].rmeta to 1770456871.061404866s
+   0.894831228s DEBUG cargo::core::compiler::fingerprint: write fingerprint (90213bf9b5d05997) : [ROOT]/foo/target/debug/.fingerprint/foo-[HASH]/lib-foo
+   0.895445558s TRACE main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end: JobId(3)
+   0.895549263s DEBUG main:exec:compile_ws:compile:execute: cargo::core::compiler::job_queue: end (Unit { pkg: Package { id: PackageId { name: "foo", version: "0.1.0", source: "[ROOT]/foo" }, ..: ".." }, target: TargetInner { name_inferred: true, ..: lib_target("foo", ["lib"], "[ROOT]/foo/src/lib.rs", Edition2015) }, profile: Profile { incremental: false, ..: default_dev() }, kind: Host, mode: Check { test: false }, features: [], rustflags: [], rustdocflags: [], links_overrides: {}, artifact: false, artifact_target_for_features: None, is_std: false, dep_hash: 6372430505077370690 }): Ok(())
 [FINISHED] `dev` profile [unoptimized + debuginfo] target(s) in [ELAPSED]s
+   0.895841806s TRACE main:exec:compile_ws:compile:execute: cargo::util::context: get cv ConfigKey { env: "CARGO_FUTURE_INCOMPAT_REPORT", parts: [("future-incompat-report", 5)] }
+   0.904501048s  INFO main:exec:compile_ws: cargo::util::rustc: updated rustc info cache
 
 "#]]
                 .unordered(),

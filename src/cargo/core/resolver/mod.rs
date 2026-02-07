@@ -283,6 +283,15 @@ fn activate_deps_loop(
 
         loop {
             let next = remaining_candidates.next(&mut conflicting_activations, &resolver_ctx);
+            if let Some((s, _)) = next.as_ref()
+                && !conflicting_activations.is_empty()
+            {
+                let s = format!(
+                    "Current {}, we got conflicts({conflicting_activations:?})!",
+                    s.name()
+                );
+                dbg!(s);
+            }
 
             let (candidate, has_another) = next.ok_or(()).or_else(|_| {
                 // If we get here then our `remaining_candidates` was just
