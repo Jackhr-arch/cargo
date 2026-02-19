@@ -283,14 +283,30 @@ fn activate_deps_loop(
 
         loop {
             let next = remaining_candidates.next(&mut conflicting_activations, &resolver_ctx);
-            if let Some((s, _)) = next.as_ref()
-                && !conflicting_activations.is_empty()
-            {
-                let s = format!(
-                    "Current {}, we got conflicts({conflicting_activations:?})!",
-                    s.name()
+            if let Some((s, _)) = next.as_ref() {
+                if !conflicting_activations.is_empty() {
+                    eprintln!(
+                        "[CHECK] Current we are activating {} @ {} to match the dependency {} required by {}, got conflicting_activations: {conflicting_activations:?}",
+                        s.name(),
+                        s.version(),
+                        dep.package_name(),
+                        parent.name()
+                    );
+                    eprintln!();
+                }
+            } else {
+                eprintln!(
+                    "[Notice] No remaining candidates when trying to find a match for dependency {} required by {}",
+                    dep.package_name(),
+                    parent.name()
                 );
-                dbg!(s);
+                if !conflicting_activations.is_empty() {
+                    eprintln!(
+                        "[WARNING] conflicting_activations: {:?}",
+                        conflicting_activations
+                    );
+                }
+                eprintln!();
             }
 
             let (candidate, has_another) = next.ok_or(()).or_else(|_| {
